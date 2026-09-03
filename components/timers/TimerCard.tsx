@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ActiveTimer } from "./ActiveTimer";
 import type { TimerPreset } from "@/lib/timers";
@@ -20,6 +22,7 @@ const CATEGORY_LABELS: Record<TimerPreset["category"], string> = {
 
 export function TimerCard({ preset, onSessionUpdate }: TimerCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const router = useRouter();
 
   return (
     <div
@@ -76,21 +79,40 @@ export function TimerCard({ preset, onSessionUpdate }: TimerCardProps) {
             {preset.description}
           </p>
 
-          {/* Footer metadata */}
-          <div className="flex items-center gap-3 pt-1 border-t border-[var(--border-hex)]">
-            <span className="text-[11px] text-[var(--text-muted)]">
-              {preset.rounds} rounds
-            </span>
-            <span className="text-[11px] text-[var(--text-muted)]">·</span>
-            <span className="text-[11px] text-[var(--text-muted)]">
-              ~
-              {Math.round(
-                (preset.workMinutes * preset.rounds +
-                  preset.breakMinutes * (preset.rounds - 1)) /
-                  60,
+          {/* Footer */}
+          <div className="flex items-center justify-between pt-1 border-t border-[var(--border-hex)]">
+            <div className="flex items-center gap-3">
+              <span className="text-[11px] text-[var(--text-muted)]">
+                {preset.rounds} rounds
+              </span>
+              <span className="text-[11px] text-[var(--text-muted)]">·</span>
+              <span className="text-[11px] text-[var(--text-muted)]">
+                ~
+                {Math.round(
+                  (preset.workMinutes * preset.rounds +
+                    preset.breakMinutes * (preset.rounds - 1)) /
+                    60,
+                )}
+                h total
+              </span>
+            </div>
+
+            {/* Open full page button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                router.push(`/timer/${preset.id}`);
+              }}
+              className={cn(
+                "flex items-center gap-1 text-[11px] text-[var(--text-muted)]",
+                "hover:text-[var(--accent-hex)] transition-colors duration-150",
+                "opacity-0 group-hover:opacity-100",
               )}
-              h total
-            </span>
+              aria-label={`Open ${preset.name} in full view`}
+            >
+              <span>Open</span>
+              <ArrowUpRight className="h-3 w-3" />
+            </button>
           </div>
         </div>
       )}
@@ -98,7 +120,6 @@ export function TimerCard({ preset, onSessionUpdate }: TimerCardProps) {
       {/* Expanded / active state */}
       {isExpanded && (
         <div>
-          {/* Sticky card header */}
           <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[var(--border-hex)]">
             <div>
               <p className="text-[15px] font-medium text-[var(--text)]">
@@ -108,6 +129,19 @@ export function TimerCard({ preset, onSessionUpdate }: TimerCardProps) {
                 {preset.workMinutes} · {preset.breakMinutes} min
               </p>
             </div>
+
+            {/* Open full page button — visible in expanded state too */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                router.push(`/timer/${preset.id}`);
+              }}
+              className="flex items-center gap-1 text-[11px] text-[var(--text-muted)] hover:text-[var(--accent-hex)] transition-colors duration-150"
+              aria-label={`Open ${preset.name} in full view`}
+            >
+              <span>Open</span>
+              <ArrowUpRight className="h-3 w-3" />
+            </button>
           </div>
 
           <ActiveTimer
