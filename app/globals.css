@@ -1,26 +1,70 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 222 13% 7%;
+    --foreground: 220 10% 92%;
+
+    --card: 223 12% 10%;
+    --card-foreground: 220 10% 92%;
+
+    --popover: 223 12% 10%;
+    --popover-foreground: 220 10% 92%;
+
+    --primary: 234 82% 65%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 223 12% 13%;
+    --secondary-foreground: 220 10% 92%;
+
+    --muted: 223 12% 13%;
+    --muted-foreground: 220 8% 44%;
+
+    --accent: 234 82% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 65% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 223 12% 17%;
+    --input: 223 12% 17%;
+    --ring: 234 82% 65%;
+
+    --radius: 0.625rem;
+
+    /* knotd custom tokens */
+    --surface: #16181c;
+    --surface-2: #1e2026;
+    --accent-hex: #5b6af0;
+    --accent-dim: #3d4ab5;
+    --text: #e8e9ec;
+    --text-muted: #6b7180;
+    --border-hex: #2a2d35;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-inter), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Timer numerals use DM Serif Display */
+  .font-timer {
+    font-family: var(--font-dm-serif), Georgia, serif;
+  }
+}
+
+@layer utilities {
+  .page-padding {
+    padding-left: clamp(1.5rem, 5vw, 5rem);
+    padding-right: clamp(1.5rem, 5vw, 5rem);
+  }
 }
