@@ -20,7 +20,7 @@ export default async function TimerPage({ params }: TimerPageProps) {
   if (!preset) notFound();
 
   return (
-    <div className="min-h-screen bg-[#0E0F11] flex flex-col">
+    <div className="min-h-screen bg-[#0E0F11] flex flex-col max-h-full">
       {/* Minimal top bar — just back link and wordmark */}
       <header className="fixed top-0 left-0 right-0 z-50 h-[52px] border-b border-[var(--border-hex)] bg-[#0E0F11]">
         <div className="page-padding flex h-full max-w-[1280px] mx-auto items-center justify-between">
@@ -42,6 +42,7 @@ export default async function TimerPage({ params }: TimerPageProps) {
       </header>
 
       {/* Full timer — vertically centered in remaining space */}
+
       <main className="flex-1 flex flex-col pt-[52px]">
         <FullTimer preset={preset} />
       </main>

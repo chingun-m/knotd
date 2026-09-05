@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
   { href: "/", label: "Timers" },
-  { href: "/sessions", label: "Sessions" },
+  { href: "/todos", label: "To-do" },
   { href: "/settings", label: "Settings" },
 ];
 
